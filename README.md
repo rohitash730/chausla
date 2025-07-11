@@ -1,2 +1,0 @@
-# chausla
-My news machine
