@@ -1,0 +1,30 @@
+﻿# Path: .github/workflows/ci.yml
+name: RSS → Build → Deploy
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install & Fetch Feeds
+        run: |
+          npm ci
+          node scripts/fetch-feeds.js
+      - name: Build Eleventy Site
+        run: npm run build
+      - name: Commit updated feeds
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/_data/feeds.json
+          git commit -m "update feeds" || echo "No changes"
+          git push

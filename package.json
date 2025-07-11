@@ -1,0 +1,13 @@
+﻿// Path: package.json
+{
+  "name": "automated-news-site",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0",
+    "rss-parser": "^3.0.0"
+  }
+}
